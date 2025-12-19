@@ -56,5 +56,5 @@ Firebase integration for authentication and database storage is planned as a fut
 
 ## 👤 Author
 **Parth Deshmukh**  
-- GitHub: https://github.com/yourusername  
-- LinkedIn: https://linkedin.com/in/yourusername
+- GitHub: https://github.com/dev-parthdeshmukh  
+- LinkedIn: https://linkedin.com/in/deshmukh-parth
