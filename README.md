@@ -1,60 +1,16 @@
-# SafeRide – Smart Ride Safety & Driver Analysis Application
+# saferide_new
 
-SafeRide is a Flutter-based mobile application focused on improving ride safety
-by analyzing driver risk levels and providing safety recommendations to users.
+A new Flutter project.
 
----
+## Getting Started
 
-## 🚀 Features Implemented
-- User authentication flow with login and registration screens
-- Emergency contact setup for quick access during unsafe situations
-- Driver detail input and profile setup
-- Driver safety analysis using sample data
-- Safety recommendations based on calculated driver risk levels
-- Smooth animations and responsive user interface
+This project is a starting point for a Flutter application.
 
----
+A few resources to get you started if this is your first Flutter project:
 
-## 🛠️ Tech Stack
-- **Framework:** Flutter (Dart)
-- **Platform:** Android
-- **UI:** Material UI & Animations
-- **Backend (Planned):** Firebase Authentication & Database
+- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
+- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
 
----
-
-## 📌 Project Status
-🚧 **Ongoing**
-
-The core application flow and safety analysis logic have been implemented.
-Firebase integration for authentication and database storage is planned as a future enhancement.
-
----
-
-## 📂 Project Structure (Simplified)
-
-
-
-
----
-
-## 📌 Learning Outcomes
-- Mobile application development using Flutter
-- UI/UX design with Material components and animations
-- Application navigation and state management
-- Understanding of mobile app architecture
-
----
-
-## 🔮 Future Enhancements
-- Firebase authentication and real-time database integration
-- Real driver data analysis
-- Location tracking and emergency alerts
-- Enhanced safety scoring algorithm
-
----
-
-## 👤 Author
-**Parth Deshmukh**  
-- GitHub : https://github.com/dev-parthdeshmukh  
-- LinkedIn: https://linkedin.com/in/deshmukh-parth
+For help getting started with Flutter development, view the
+[online documentation](https://docs.flutter.dev/), which offers tutorials,
+samples, guidance on mobile development, and a full API reference.
