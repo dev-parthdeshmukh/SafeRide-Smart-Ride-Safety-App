@@ -1,16 +1,84 @@
-# saferide_new
+# SafeRide – Smart Ride Safety & Driver Analysis Application
 
-A new Flutter project.
+SafeRide is a Flutter-based mobile application focused on improving ride safety by analyzing
+driver risk levels and providing safety recommendations to users.
 
-## Getting Started
+---
 
-This project is a starting point for a Flutter application.
+## 🚀 Features Implemented
+- User authentication flow with login and registration screens
+- Emergency contact setup for quick access during unsafe situations
+- Driver detail input and profile setup
+- Driver safety analysis using sample data
+- Safety recommendations based on calculated driver risk levels
+- Smooth animations and responsive user interface
 
-A few resources to get you started if this is your first Flutter project:
+---
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+## 🛠️ Tech Stack
+- **Framework:** Flutter (Dart)
+- **Platform:** Android
+- **UI:** Material UI & Animations
+- **Backend (Planned):** Firebase Authentication & Database
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+---
+
+## 📂 Project Structure
+```text
+saferide_new/
+├── lib/
+│   ├── models/
+│   │   └── driver_model.dart
+│   ├── pages/
+│   │   ├── login_page.dart
+│   │   ├── register_page.dart
+│   │   ├── splash_screen.dart
+│   │   ├── emergency_details_page.dart
+│   │   ├── driver_check_page.dart
+│   │   ├── driver_result_page.dart
+│   │   └── profile_setup_page.dart
+│   ├── services/
+│   │   └── firebase_service.dart
+│   ├── widgets/
+│   │   └── animated_background.dart
+│   ├── firebase_options.dart
+│   └── main.dart
+├── android/
+├── ios/
+├── pubspec.yaml
+├── pubspec.lock
+└── README.md
+```
+---
+
+## 📌 Project Status
+🚧 **Ongoing**
+
+The core application flow, UI navigation, and driver safety analysis logic
+have been implemented using sample data.
+Firebase authentication and real-time database integration are planned
+as future enhancements.
+
+---
+
+## 📌 Learning Outcomes
+- Mobile application development using Flutter and Dart
+- UI/UX design using Material components and animations
+- Modular Flutter project structure (pages, models, services, widgets)
+- State management and navigation between screens
+- Understanding of real-world app workflow and architecture
+
+---
+
+## 🔮 Future Enhancements
+- Firebase authentication and cloud database integration
+- Real driver data analysis
+- Location tracking and emergency alerts
+- Improved safety scoring and recommendation algorithm
+
+---
+
+## 👤 Author
+**Parth Deshmukh**  
+- GitHub: https://github.com/dev-parthdeshmukh 
+- LinkedIn: https://linkedin.com/in/deshmukh-parth
