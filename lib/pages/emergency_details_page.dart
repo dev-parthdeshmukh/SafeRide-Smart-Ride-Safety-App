@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../widgets/animated_background.dart';
+
 
 class EmergencyDetailsPage extends StatefulWidget {
   const EmergencyDetailsPage({super.key});
@@ -16,46 +16,45 @@ class _EmergencyDetailsPageState extends State<EmergencyDetailsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: AnimatedBackground(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 24),
-          child: Center(
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  const Hero(
-                    tag: 'logo',
-                    child: Icon(Icons.contact_emergency,
-                        size: 100, color: Colors.white),
+      backgroundColor: Colors.indigo,
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 24),
+        child: Center(
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                const Icon(
+                  Icons.contact_emergency,
+                  size: 100,
+                  color: Colors.white,
+                ),
+                const SizedBox(height: 20),
+                const Text(
+                  "Add Emergency Contact",
+                  style: TextStyle(
+                    fontSize: 22,
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
                   ),
-                  const SizedBox(height: 20),
-                  const Text(
-                    "Add Emergency Contact",
-                    style: TextStyle(
-                      fontSize: 22,
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  const SizedBox(height: 30),
+                ),
+                const SizedBox(height: 30),
 
-                  // 🧍 Emergency Contact Name
-                  _inputField(nameController, "Full Name", Icons.person),
+                // 🧍 Emergency Contact Name
+                _inputField(nameController, "Full Name", Icons.person),
 
-                  const SizedBox(height: 16),
+                const SizedBox(height: 16),
 
-                  // 📞 Emergency Contact Number
-                  _inputField(contactController, "Contact Number", Icons.phone),
+                // 📞 Emergency Contact Number
+                _inputField(contactController, "Contact Number", Icons.phone),
 
-                  const SizedBox(height: 16),
+                const SizedBox(height: 16),
 
-                  // 👨‍👩‍👧 Relationship
-                  _inputField(relationController, "Relationship", Icons.group),
+                // 👨‍👩‍👧 Relationship
+                _inputField(relationController, "Relationship", Icons.group),
 
-                  const SizedBox(height: 25),
-                  _animatedButton(context, "Continue", '/driverCheck'),
-                ],
-              ),
+                const SizedBox(height: 25),
+                _button(context, "Continue", '/driverCheck'),
+              ],
             ),
           ),
         ),
@@ -63,8 +62,9 @@ class _EmergencyDetailsPageState extends State<EmergencyDetailsPage> {
     );
   }
 
-  //  Reusable Input Field Widget
-  Widget _inputField(TextEditingController controller, String hint, IconData icon) {
+  // Reusable Input Field Widget
+  Widget _inputField(
+      TextEditingController controller, String hint, IconData icon) {
     return TextField(
       controller: controller,
       style: const TextStyle(color: Colors.white),
@@ -83,8 +83,8 @@ class _EmergencyDetailsPageState extends State<EmergencyDetailsPage> {
     );
   }
 
-  //  Continue Button
-  Widget _animatedButton(BuildContext context, String text, String route) {
+  // Static Continue Button (NO animation)
+  Widget _button(BuildContext context, String text, String route) {
     return GestureDetector(
       onTap: () {
         if (nameController.text.isEmpty ||
@@ -99,11 +99,9 @@ class _EmergencyDetailsPageState extends State<EmergencyDetailsPage> {
           return;
         }
 
-        // For now just navigate (you can also save to Firebase later)
         Navigator.pushNamed(context, route);
       },
-      child: AnimatedContainer(
-        duration: const Duration(milliseconds: 300),
+      child: Container(
         height: 55,
         width: double.infinity,
         alignment: Alignment.center,

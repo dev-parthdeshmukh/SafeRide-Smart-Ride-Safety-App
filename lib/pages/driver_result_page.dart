@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import '../models/driver_model.dart';
-import '../widgets/animated_background.dart';
+import 'active_ride_sos_page.dart';
 
 class DriverResultPage extends StatefulWidget {
   final Driver driver;
@@ -90,7 +90,6 @@ class _DriverResultPageState extends State<DriverResultPage>
       curve: Curves.easeOutCubic,
     ));
 
-    // Run both animations
     _gaugeController.forward();
     Future.delayed(const Duration(milliseconds: 600), () {
       _slideController.forward();
@@ -110,108 +109,126 @@ class _DriverResultPageState extends State<DriverResultPage>
     final recommendation = _recommendation(widget.driver.riskLevel);
 
     return Scaffold(
-      body: AnimatedBackground(
-        child: Padding(
-          padding: const EdgeInsets.all(20),
-          child: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Hero(
-                  tag: 'logo',
-                  child: Icon(Icons.shield, size: 90, color: Colors.white),
-                ),
-                const SizedBox(height: 20),
-                AnimatedBuilder(
-                  animation: _gaugeController,
-                  builder: (context, _) {
-                    return CircularPercentIndicator(
-                      radius: 120.0,
-                      lineWidth: 16.0,
-                      percent: _gaugeAnimation.value,
-                      animation: true,
-                      center: Text(
-                        "${(_gaugeAnimation.value * 100).toInt()}%",
-                        style: TextStyle(
-                          fontSize: 24,
-                          fontWeight: FontWeight.bold,
-                          color: color,
-                        ),
+      backgroundColor: Colors.indigo,
+      body: Padding(
+        padding: const EdgeInsets.all(20),
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Hero(
+                tag: 'logo',
+                child: Icon(Icons.shield, size: 90, color: Colors.white),
+              ),
+              const SizedBox(height: 20),
+
+              AnimatedBuilder(
+                animation: _gaugeController,
+                builder: (context, _) {
+                  return CircularPercentIndicator(
+                    radius: 120.0,
+                    lineWidth: 16.0,
+                    percent: _gaugeAnimation.value,
+                    animation: true,
+                    center: Text(
+                      "${(_gaugeAnimation.value * 100).toInt()}%",
+                      style: TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                        color: color,
                       ),
-                      progressColor: color,
-                      backgroundColor: Colors.white24,
-                      circularStrokeCap: CircularStrokeCap.round,
-                    );
-                  },
-                ),
-                const SizedBox(height: 30),
-                SlideTransition(
-                  position: _slideAnimation,
-                  child: FadeTransition(
-                    opacity: _fadeAnimation,
-                    child: Container(
-                      padding: const EdgeInsets.all(20),
-                      decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                          colors: [
-                            Colors.white.withOpacity(0.15),
-                            Colors.white.withOpacity(0.05)
-                          ],
-                          begin: Alignment.topLeft,
-                          end: Alignment.bottomRight,
-                        ),
-                        borderRadius: BorderRadius.circular(25),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black26.withOpacity(0.2),
-                            blurRadius: 10,
-                            offset: const Offset(0, 5),
-                          ),
+                    ),
+                    progressColor: color,
+                    backgroundColor: Colors.white24,
+                    circularStrokeCap: CircularStrokeCap.round,
+                  );
+                },
+              ),
+
+              const SizedBox(height: 30),
+
+              SlideTransition(
+                position: _slideAnimation,
+                child: FadeTransition(
+                  opacity: _fadeAnimation,
+                  child: Container(
+                    padding: const EdgeInsets.all(20),
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        colors: [
+                          Colors.white.withOpacity(0.15),
+                          Colors.white.withOpacity(0.05)
                         ],
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
                       ),
-                      child: Column(
-                        children: [
-                          Text(widget.driver.name,
-                              style: const TextStyle(
-                                  fontSize: 22,
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold)),
-                          const SizedBox(height: 8),
-                          Text("License: ${widget.driver.license}",
-                              style: const TextStyle(
-                                  color: Colors.white70, fontSize: 15)),
-                          const SizedBox(height: 15),
-                          Text(
-                            recommendation,
-                            textAlign: TextAlign.center,
-                            style: const TextStyle(
-                              color: Colors.white,
-                              fontSize: 16,
+                      borderRadius: BorderRadius.circular(25),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black26.withOpacity(0.2),
+                          blurRadius: 10,
+                          offset: const Offset(0, 5),
+                        ),
+                      ],
+                    ),
+                    child: Column(
+                      children: [
+                        Text(
+                          widget.driver.name,
+                          style: const TextStyle(
+                            fontSize: 22,
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        const SizedBox(height: 8),
+                        Text(
+                          "License: ${widget.driver.license}",
+                          style: const TextStyle(
+                            color: Colors.white70,
+                            fontSize: 15,
+                          ),
+                        ),
+                        const SizedBox(height: 15),
+                        Text(
+                          recommendation,
+                          textAlign: TextAlign.center,
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 16,
+                          ),
+                        ),
+                        const SizedBox(height: 25),
+
+                        // ✅ FIXED BUTTON
+                        ElevatedButton(
+                          onPressed: () {
+                            Navigator.pushReplacementNamed(
+                                context, '/activeSOS');
+                          },
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.white,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(25),
+                            ),
+                            minimumSize:
+                                const Size(double.infinity, 50),
+                          ),
+                          child: const Text(
+                            "Continue Ride",
+                            style: TextStyle(
+                              color: Colors.indigo,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 18,
                             ),
                           ),
-                          const SizedBox(height: 25),
-                          ElevatedButton(
-                            onPressed: () => Navigator.pop(context),
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.white,
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(25)),
-                              minimumSize:
-                                  const Size(double.infinity, 50),
-                            ),
-                            child: const Text("Continue Ride",
-                                style: TextStyle(
-                                    color: Colors.indigo,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 18)),
-                          ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
                   ),
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),

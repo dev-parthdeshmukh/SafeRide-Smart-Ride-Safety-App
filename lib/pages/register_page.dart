@@ -1,7 +1,6 @@
 // lib/pages/register_page.dart
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import '../widgets/animated_background.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
@@ -10,36 +9,15 @@ class RegisterPage extends StatefulWidget {
   State<RegisterPage> createState() => _RegisterPageState();
 }
 
-class _RegisterPageState extends State<RegisterPage>
-    with SingleTickerProviderStateMixin {
+class _RegisterPageState extends State<RegisterPage> {
   final nameController = TextEditingController();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
 
-  late AnimationController _controller;
-  late Animation<double> _fadeIn;
-
   bool _isLoading = false;
   bool _obscure = true;
 
-  @override
-  void initState() {
-    super.initState();
-    _controller = AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 800),
-    );
-    _fadeIn = CurvedAnimation(parent: _controller, curve: Curves.easeInOut);
-    _controller.forward();
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
-
-  //  Register logic
+  // Register logic
   Future<void> _registerUser() async {
     final email = emailController.text.trim();
     final password = passwordController.text.trim();
@@ -88,82 +66,85 @@ class _RegisterPageState extends State<RegisterPage>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: AnimatedBackground(
-        child: FadeTransition(
-          opacity: _fadeIn,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 24),
-            child: Center(
-              child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    const Hero(
-                      tag: 'logo',
-                      child: Icon(Icons.shield, size: 100, color: Colors.white),
-                    ),
-                    const SizedBox(height: 30),
-
-                    _inputField(nameController, "Full Name", Icons.person),
-                    const SizedBox(height: 16),
-                    _inputField(emailController, "Email", Icons.email_outlined),
-                    const SizedBox(height: 16),
-                    _inputField(passwordController, "Password", Icons.lock_outline,
-                        obscure: _obscure, suffix: _togglePassword),
-                    const SizedBox(height: 25),
-
-                    // 🔹 Animated register button
-                    GestureDetector(
-                      onTap: _isLoading ? null : _registerUser,
-                      child: AnimatedContainer(
-                        duration: const Duration(milliseconds: 300),
-                        height: 55,
-                        width: double.infinity,
-                        alignment: Alignment.center,
-                        decoration: BoxDecoration(
-                          color: _isLoading ? Colors.grey[400] : Colors.white,
-                          borderRadius: BorderRadius.circular(25),
-                          boxShadow: const [
-                            BoxShadow(
-                              color: Colors.black26,
-                              blurRadius: 10,
-                              offset: Offset(0, 5),
-                            ),
-                          ],
-                        ),
-                        child: _isLoading
-                            ? const SizedBox(
-                                height: 25,
-                                width: 25,
-                                child: CircularProgressIndicator(
-                                  color: Colors.indigo,
-                                  strokeWidth: 3,
-                                ),
-                              )
-                            : const Text(
-                                "Register",
-                                style: TextStyle(
-                                  color: Colors.indigo,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 18,
-                                ),
-                              ),
-                      ),
-                    ),
-
-                    const SizedBox(height: 20),
-
-                    TextButton(
-                      onPressed: () {
-                        Navigator.pushReplacementNamed(context, '/login');
-                      },
-                      child: const Text(
-                        "Back to Login",
-                        style: TextStyle(color: Colors.white),
-                      ),
-                    ),
-                  ],
+      backgroundColor: Colors.indigo,
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 24),
+        child: Center(
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                const Icon(
+                  Icons.shield,
+                  size: 100,
+                  color: Colors.white,
                 ),
-              ),
+                const SizedBox(height: 30),
+
+                _inputField(nameController, "Full Name", Icons.person),
+                const SizedBox(height: 16),
+
+                _inputField(emailController, "Email", Icons.email_outlined),
+                const SizedBox(height: 16),
+
+                _inputField(
+                  passwordController,
+                  "Password",
+                  Icons.lock_outline,
+                  obscure: _obscure,
+                  suffix: _togglePassword,
+                ),
+                const SizedBox(height: 25),
+
+                // Static register button (NO animation)
+                GestureDetector(
+                  onTap: _isLoading ? null : _registerUser,
+                  child: Container(
+                    height: 55,
+                    width: double.infinity,
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                      color: _isLoading ? Colors.grey[400] : Colors.white,
+                      borderRadius: BorderRadius.circular(25),
+                      boxShadow: const [
+                        BoxShadow(
+                          color: Colors.black26,
+                          blurRadius: 10,
+                          offset: Offset(0, 5),
+                        ),
+                      ],
+                    ),
+                    child: _isLoading
+                        ? const SizedBox(
+                            height: 25,
+                            width: 25,
+                            child: CircularProgressIndicator(
+                              color: Colors.indigo,
+                              strokeWidth: 3,
+                            ),
+                          )
+                        : const Text(
+                            "Register",
+                            style: TextStyle(
+                              color: Colors.indigo,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 18,
+                            ),
+                          ),
+                  ),
+                ),
+
+                const SizedBox(height: 20),
+
+                TextButton(
+                  onPressed: () {
+                    Navigator.pushReplacementNamed(context, '/login');
+                  },
+                  child: const Text(
+                    "Back to Login",
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ),
+              ],
             ),
           ),
         ),
@@ -172,8 +153,13 @@ class _RegisterPageState extends State<RegisterPage>
   }
 
   // Input field with optional password toggle
-  Widget _inputField(TextEditingController controller, String hint, IconData icon,
-      {bool obscure = false, VoidCallback? suffix}) {
+  Widget _inputField(
+    TextEditingController controller,
+    String hint,
+    IconData icon, {
+    bool obscure = false,
+    VoidCallback? suffix,
+  }) {
     return TextField(
       controller: controller,
       obscureText: obscure,
@@ -201,7 +187,7 @@ class _RegisterPageState extends State<RegisterPage>
     );
   }
 
-  //  Toggle password visibility
+  // Toggle password visibility
   void _togglePassword() {
     setState(() {
       _obscure = !_obscure;

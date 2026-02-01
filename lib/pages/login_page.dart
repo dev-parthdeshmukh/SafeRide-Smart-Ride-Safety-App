@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import '../widgets/animated_background.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -14,7 +13,7 @@ class _LoginPageState extends State<LoginPage> {
   final passwordController = TextEditingController();
   bool _isLoading = false;
 
-  //  Firebase login logic
+  // Firebase login logic
   Future<void> _loginUser() async {
     setState(() => _isLoading = true);
     try {
@@ -28,8 +27,7 @@ class _LoginPageState extends State<LoginPage> {
         const SnackBar(content: Text("✅ Login successful")),
       );
 
-      // Navigate to Emergency Details page
-      Navigator.pushReplacementNamed(context, '/emergency');
+      Navigator.pushReplacementNamed(context, '/driverCheck');
     } on FirebaseAuthException catch (e) {
       String message;
       if (e.code == 'user-not-found') {
@@ -51,81 +49,84 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: AnimatedBackground(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 24),
-          child: Center(
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  const Hero(
-                    tag: 'logo',
-                    child: Icon(Icons.shield, size: 100, color: Colors.white),
-                  ),
-                  const SizedBox(height: 30),
+      backgroundColor: Colors.indigo,
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 24),
+        child: Center(
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                const Icon(
+                  Icons.shield,
+                  size: 100,
+                  color: Colors.white,
+                ),
+                const SizedBox(height: 30),
 
-                  // Email field
-                  _inputField(emailController, "Email", Icons.email_outlined),
-                  const SizedBox(height: 20),
+                // Email field
+                _inputField(emailController, "Email", Icons.email_outlined),
+                const SizedBox(height: 20),
 
-                  // Password field
-                  _inputField(passwordController, "Password", Icons.lock_outline,
-                      obscure: true),
-                  const SizedBox(height: 30),
+                // Password field
+                _inputField(
+                  passwordController,
+                  "Password",
+                  Icons.lock_outline,
+                  obscure: true,
+                ),
+                const SizedBox(height: 30),
 
-                  // Animated login button (with loading state)
-                  GestureDetector(
-                    onTap: _isLoading ? null : _loginUser,
-                    child: AnimatedContainer(
-                      duration: const Duration(milliseconds: 300),
-                      height: 55,
-                      width: double.infinity,
-                      alignment: Alignment.center,
-                      decoration: BoxDecoration(
-                        color: _isLoading ? Colors.grey : Colors.white,
-                        borderRadius: BorderRadius.circular(25),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black26,
-                            blurRadius: 10,
-                            offset: const Offset(0, 5),
-                          )
-                        ],
-                      ),
-                      child: _isLoading
-                          ? const SizedBox(
-                              height: 25,
-                              width: 25,
-                              child: CircularProgressIndicator(
-                                color: Colors.indigo,
-                                strokeWidth: 3,
-                              ),
-                            )
-                          : const Text(
-                              "Login",
-                              style: TextStyle(
-                                color: Colors.indigo,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 18,
-                              ),
+                // Static login button with loading indicator
+                GestureDetector(
+                  onTap: _isLoading ? null : _loginUser,
+                  child: Container(
+                    height: 55,
+                    width: double.infinity,
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                      color: _isLoading ? Colors.grey : Colors.white,
+                      borderRadius: BorderRadius.circular(25),
+                      boxShadow: const [
+                        BoxShadow(
+                          color: Colors.black26,
+                          blurRadius: 10,
+                          offset: Offset(0, 5),
+                        ),
+                      ],
+                    ),
+                    child: _isLoading
+                        ? const SizedBox(
+                            height: 25,
+                            width: 25,
+                            child: CircularProgressIndicator(
+                              color: Colors.indigo,
+                              strokeWidth: 3,
                             ),
-                    ),
+                          )
+                        : const Text(
+                            "Login",
+                            style: TextStyle(
+                              color: Colors.indigo,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 18,
+                            ),
+                          ),
                   ),
+                ),
 
-                  const SizedBox(height: 15),
+                const SizedBox(height: 15),
 
-                  // Register link
-                  TextButton(
-                    onPressed: () {
-                      Navigator.pushNamed(context, '/register');
-                    },
-                    child: const Text(
-                      "Create new account",
-                      style: TextStyle(color: Colors.white),
-                    ),
+                // Register link
+                TextButton(
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/register');
+                  },
+                  child: const Text(
+                    "Create new account",
+                    style: TextStyle(color: Colors.white),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
         ),
@@ -133,10 +134,13 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  //  Input field widget
+  // Input field widget
   Widget _inputField(
-      TextEditingController controller, String hint, IconData icon,
-      {bool obscure = false}) {
+    TextEditingController controller,
+    String hint,
+    IconData icon, {
+    bool obscure = false,
+  }) {
     return TextField(
       controller: controller,
       obscureText: obscure,

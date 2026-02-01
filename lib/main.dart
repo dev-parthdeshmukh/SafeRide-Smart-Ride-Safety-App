@@ -8,6 +8,10 @@ import 'pages/login_page.dart';
 import 'pages/register_page.dart';
 import 'pages/emergency_details_page.dart';
 import 'pages/driver_check_page.dart';
+import 'pages/active_ride_sos_page.dart';
+
+
+
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -40,6 +44,7 @@ class SafeRideApp extends StatelessWidget {
         '/register': (context) => const RegisterPage(),
         '/emergency': (context) => const EmergencyDetailsPage(),
         '/driverCheck': (context) => const DriverCheckPage(),
+        '/activeSOS': (context) => const ActiveRideSOSPage(),
       },
     );
   }
