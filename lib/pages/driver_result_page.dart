@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import '../models/driver_model.dart';
-import 'active_ride_sos_page.dart';
 
 class DriverResultPage extends StatefulWidget {
   final Driver driver;

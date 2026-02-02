@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'active_alert_page.dart';
 import 'dart:async';
+import 'active_alert_page.dart';
 
 class ActiveRideSOSPage extends StatefulWidget {
   const ActiveRideSOSPage({super.key});
@@ -10,60 +10,26 @@ class ActiveRideSOSPage extends StatefulWidget {
 }
 
 class _ActiveRideSOSPageState extends State<ActiveRideSOSPage> {
-  Timer? _holdTimer;
-  double _progress = 0.0;
+  Timer? _timer;
+  double _progress = 0;
 
   void _startHold() {
     _progress = 0;
-    _holdTimer = Timer.periodic(const Duration(milliseconds: 100), (timer) {
-      setState(() {
-        _progress += 0.033;
-      });
-
+    _timer = Timer.periodic(const Duration(milliseconds: 100), (t) {
+      setState(() => _progress += 0.033);
       if (_progress >= 1) {
-        timer.cancel();
-        _triggerSOS();
+        t.cancel();
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (_) => const ActiveAlertPage()),
+        );
       }
     });
   }
 
   void _cancelHold() {
-    _holdTimer?.cancel();
+    _timer?.cancel();
     setState(() => _progress = 0);
-  }
-
-  void _triggerSOS() {
-    Navigator.pushReplacement(
-  context,
-  MaterialPageRoute(
-    builder: (_) => const ActiveAlertPage(),
-  ),
-);
-  }
-
-  void _endRide() {
-    showDialog(
-      context: context,
-      builder: (_) => AlertDialog(
-        title: const Text("Arrived Safely?"),
-        content: const Text(
-          "Are you sure you have arrived safely?",
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: const Text("Cancel"),
-          ),
-          ElevatedButton(
-            onPressed: () {
-              Navigator.pop(context);
-              // TODO: Navigate to feedback page
-            },
-            child: const Text("Confirm"),
-          ),
-        ],
-      ),
-    );
   }
 
   @override
@@ -74,15 +40,15 @@ class _ActiveRideSOSPageState extends State<ActiveRideSOSPage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            const SizedBox(height: 20),
+            const SizedBox(height: 30),
 
-            // Header
+            // Title
             const Text(
               "Emergency SOS",
               style: TextStyle(
-                color: Colors.white,
                 fontSize: 22,
-                fontWeight: FontWeight.bold,
+                fontWeight: FontWeight.w600,
+                color: Colors.white,
               ),
             ),
 
@@ -98,31 +64,31 @@ class _ActiveRideSOSPageState extends State<ActiveRideSOSPage> {
                     height: 220,
                     child: CircularProgressIndicator(
                       value: _progress,
-                      strokeWidth: 8,
+                      strokeWidth: 6,
                       backgroundColor: Colors.white24,
                       valueColor:
                           const AlwaysStoppedAnimation(Colors.redAccent),
                     ),
                   ),
                   Container(
-                    width: 180,
-                    height: 180,
+                    width: 170,
+                    height: 170,
                     decoration: const BoxDecoration(
+                      color: Colors.redAccent,
                       shape: BoxShape.circle,
-                      color: Colors.red,
                     ),
                     child: const Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Icon(Icons.notifications_active,
-                            color: Colors.white, size: 40),
-                        SizedBox(height: 8),
+                            color: Colors.white, size: 36),
+                        SizedBox(height: 6),
                         Text(
                           "SOS",
                           style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 32,
+                            fontSize: 30,
                             fontWeight: FontWeight.bold,
+                            color: Colors.white,
                           ),
                         ),
                       ],
@@ -140,18 +106,48 @@ class _ActiveRideSOSPageState extends State<ActiveRideSOSPage> {
 
             // End Ride Button
             Padding(
-              padding: const EdgeInsets.all(20),
+              padding: const EdgeInsets.all(24),
               child: SizedBox(
                 width: double.infinity,
-                height: 55,
-                child: OutlinedButton(
-                  onPressed: _endRide,
-                  style: OutlinedButton.styleFrom(
-                    side: const BorderSide(color: Colors.white),
+                height: 50,
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.white,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30),
+                    ),
                   ),
+                  onPressed: () {
+                    showDialog(
+                      context: context,
+                      builder: (_) => AlertDialog(
+                        title: const Text("Arrived Safely?"),
+                        content: const Text(
+                          "Are you sure you have arrived safely?",
+                        ),
+                        actions: [
+                          TextButton(
+                            onPressed: () => Navigator.pop(context),
+                            child: const Text("Cancel"),
+                          ),
+                          ElevatedButton(
+                            onPressed: () {
+                              Navigator.pop(context);
+                              // TODO: Navigate to feedback page
+                            },
+                            child: const Text("Confirm"),
+                          ),
+                        ],
+                      ),
+                    );
+                  },
                   child: const Text(
                     "End Ride / Arrived Safely",
-                    style: TextStyle(color: Colors.white, fontSize: 16),
+                    style: TextStyle(
+                      color: Colors.indigo,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                    ),
                   ),
                 ),
               ),

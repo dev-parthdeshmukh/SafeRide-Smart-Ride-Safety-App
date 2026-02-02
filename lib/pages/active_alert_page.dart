@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 class ActiveAlertPage extends StatefulWidget {
   const ActiveAlertPage({super.key});
 
@@ -16,7 +17,7 @@ class _ActiveAlertPageState extends State<ActiveAlertPage>
     _pulse = AnimationController(
       vsync: this,
       duration: const Duration(seconds: 1),
-      lowerBound: 0.8,
+      lowerBound: 0.9,
       upperBound: 1.1,
     )..repeat(reverse: true);
   }
@@ -48,7 +49,6 @@ class _ActiveAlertPageState extends State<ActiveAlertPage>
           ElevatedButton(
             onPressed: () {
               Navigator.pop(context);
-              // TODO: Stop SOS backend call
               Navigator.pop(context);
             },
             child: const Text("Confirm"),
@@ -71,35 +71,47 @@ class _ActiveAlertPageState extends State<ActiveAlertPage>
               child: const Icon(
                 Icons.wifi_tethering,
                 color: Colors.redAccent,
-                size: 80,
+                size: 70,
               ),
             ),
             const SizedBox(height: 20),
+
             const Text(
               "Alert Sent to 5 Contacts",
               style: TextStyle(
-                color: Colors.white,
                 fontSize: 22,
-                fontWeight: FontWeight.bold,
+                fontWeight: FontWeight.w600,
+                color: Colors.white,
               ),
             ),
+
             const SizedBox(height: 40),
 
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 24),
-              child: SizedBox(
-                width: double.infinity,
-                height: 55,
-                child: OutlinedButton(
-                  onPressed: _cancelAlert,
-                  style: OutlinedButton.styleFrom(
-                    side: const BorderSide(color: Colors.white70),
+              child: GestureDetector(
+                onTap: _cancelAlert,
+                child: Container(
+                  height: 55,
+                  width: double.infinity,
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                    color: Colors.white, // 👈 solid white
+                    borderRadius: BorderRadius.circular(32), // 👈 pill shape
+                    boxShadow: const [
+                      BoxShadow(
+                        color: Colors.black26, // 👈 soft shadow
+                        blurRadius: 10,
+                        offset: Offset(0, 5),
+                      ),
+                    ],
                   ),
                   child: const Text(
                     "Cancel Alert",
                     style: TextStyle(
-                      color: Colors.white70,
+                      color: Colors.indigo, // 👈 same text color
                       fontSize: 16,
+                      fontWeight: FontWeight.w600,
                     ),
                   ),
                 ),
