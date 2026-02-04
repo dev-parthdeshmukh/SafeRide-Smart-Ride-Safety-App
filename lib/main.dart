@@ -2,16 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 
-// Your pages
 import 'pages/splash_screen.dart';
 import 'pages/login_page.dart';
 import 'pages/register_page.dart';
 import 'pages/emergency_details_page.dart';
 import 'pages/driver_check_page.dart';
 import 'pages/active_ride_sos_page.dart';
-
-
-
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
